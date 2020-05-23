@@ -51,13 +51,31 @@ public class WorksServiceImpl implements WorksService{
         worksRepository.deleteById(id);
     }
 
+    @Override
+    public Work editWork(long id, WorkDto dto) throws ServiceNotFoundException, NotFoundException {
+        Optional<Work> optionalWorks = worksRepository.findById(id);
+        if (optionalWorks.isPresent())
+        {
+            Work work = optionalWorks.get();
+            Work newwork = fromDto(dto);
+            work.setCars(newwork.getCars());
+            work.setMasters(newwork.getMasters());
+            work.setDate_work(newwork.getDate_work());
+            work.setServices(newwork.getServices());
+            worksRepository.save(work);
+            return optionalWorks.get();
+        } else {
+            throw new WorksNotFoundException("This work not found");
+        }
+    }
+
     private Work fromDto(final WorkDto dto) throws ServiceNotFoundException, NotFoundException {
         final Master master = mastersService.findMaster(dto.getMasterId());
         final Car car = carsService.findCar(dto.getCarId());
         final Services service = servicesService.findService(dto.getServiceId());
 
         return new Work(
-                dto.getDate(),
+                dto.getDateWork(),
                 master,
                 service,
                 car

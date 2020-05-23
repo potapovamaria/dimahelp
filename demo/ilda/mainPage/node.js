@@ -807,6 +807,9 @@ function createAddWork(elem) {
     if(elem != null) {
         elem.innerHTML = "";
     }
+    localStorage.setItem('carInfo', null)
+    localStorage.setItem('masterInfo', null)
+    localStorage.setItem('serviceInfo', null)
 
     var newButton = document.createElement('button');
     newButton.id = "addWorkButton"
@@ -832,7 +835,6 @@ function createAddWork(elem) {
                 table.id.push(personData.id);
                 table.name.push(personData.name)
             }
-            localStorage.setItem('masterInfo',table.id[0])
             var master = document.createElement('label');
             master.textContent = "Master"
 
@@ -882,7 +884,6 @@ function createAddWork(elem) {
                 table.mark.push(personData.mark)
                 table.num.push(personData.num)
             }
-            localStorage.setItem('carInfo',table.id[0])
             var car = document.createElement('label');
             car.textContent = "Car"
 
@@ -930,7 +931,6 @@ function createAddWork(elem) {
                 table.cost_our.push(personData.cost_our)
                 table.name.push(personData.name)
             }
-            localStorage.setItem('serviceInfo', table.id[0]);
             var service = document.createElement('label');
             service.textContent = "Service"
 
@@ -975,7 +975,6 @@ function createAddWork(elem) {
             "serviceId" : localStorage.getItem('serviceInfo'),
             "masterId": localStorage.getItem('masterInfo')
         })
-        alert(json)
 
         var xmlHttpRequest = new XMLHttpRequest();
         xmlHttpRequest.open('POST', 'http://localhost:8080/bt/addWork', true);
@@ -991,6 +990,279 @@ function createAddWork(elem) {
                 alert("Adding work was not successful")
             }
         });
+        }
+    }
+}
+
+function editInfo(elem) {
+
+    if (elem != null) {
+        elem.innerHTML = "";
+    }
+
+    var type = document.getElementById("editing").value;
+    if (type === "Master") {
+
+        var id = document.createElement('label')
+        id.textContent = "id"
+        var idField = document.createElement('input')
+        idField.placeholder = "Enter master id"
+        idField.id = "idFieldMaster";
+        var name = document.createElement('label');
+        name.textContent = "name ";
+        var nameField = document.createElement('input');
+        nameField.placeholder = "Enter master name";
+        nameField.id = "nameFieldMaster";
+        var button = document.createElement('button');
+        button.id = "editMaster";
+        button.type = "button";
+        button.textContent = "edit Master"
+        elem.appendChild(id)
+        elem.appendChild(idField)
+        elem.appendChild(name);
+        elem.appendChild(nameField);
+        elem.appendChild(button);
+        document.getElementById("editMaster").onclick = function () {
+            let json = JSON.stringify({
+                "name": document.getElementById("nameFieldMaster").value,
+            });
+            var xmlHttpRequest = new XMLHttpRequest();
+            xmlHttpRequest.open('POST', 'http://localhost:8080/bt/edit/masters/' + idField.value, true);
+            xmlHttpRequest.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            xmlHttpRequest.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+            xmlHttpRequest.send(json)
+            var k = 0;
+            xmlHttpRequest.addEventListener("readystatechange", () => {
+                if (xmlHttpRequest.readyState === 4 && (xmlHttpRequest.status === 200)) {
+                    alert("Editing master was successful")
+                } else if (xmlHttpRequest.status !== 200 && k < 1) {
+                    k++
+                    alert("Editing master was not successful")
+                } else if (xmlHttpRequest.status === 400 && k < 1) {
+                    k++;
+                    alert("Incorrect data! Please check input")
+                }
+            });
+        }
+    } else if (type === "Car") {
+        var id = document.createElement('label')
+        id.textContent = "id"
+        var idField = document.createElement('input')
+        idField.placeholder = "Enter car id"
+        idField.id = "idFieldCar";
+        var color = document.createElement('label')
+        color.textContent = "color ";
+        var colorField = document.createElement('input');
+        colorField.id = "colorFieldCar";
+        colorField.placeholder = "Enter car color";
+        var is_foreign = document.createElement('label')
+        is_foreign.textContent = "is car foreign";
+        var is_foreignField = document.createElement('input');
+        is_foreignField.type = "checkbox"
+        is_foreignField.checked = false;
+        is_foreignField.id = "is_foreignFieldCar"
+        var mark = document.createElement('label')
+        mark.textContent = "mark";
+        var markField = document.createElement('input');
+        markField.id = "markFieldCar";
+        markField.placeholder = "Enter car mark";
+        var num = document.createElement('label');
+        num.textContent = "car number";
+        var numField = document.createElement('input');
+        numField.id = "numFieldCar";
+        numField.placeholder = "Enter car number";
+        var button = document.createElement('button');
+        button.id = "editCar";
+        button.type = "button";
+        button.textContent = "edit Car";
+        elem.appendChild(id);
+        elem.appendChild(idField);
+        elem.appendChild(color)
+        elem.appendChild(colorField)
+        elem.appendChild(is_foreign)
+        elem.appendChild(is_foreignField)
+        elem.appendChild(mark);
+        elem.appendChild(markField);
+        elem.appendChild(num);
+        elem.appendChild(numField);
+        elem.appendChild(button);
+        document.getElementById("editCar").onclick = function () {
+            var c = document.querySelector('#is_foreignFieldCar');
+            var is_foreignCheck
+            if (c.checked) {
+                is_foreignCheck = true;
+            } else {
+                is_foreignCheck = false;
+            }
+            let json = JSON.stringify({
+                "color": document.getElementById("colorFieldCar").value,
+                "is_foreign": is_foreignCheck,
+                "mark": document.getElementById("markFieldCar").value,
+                "num": document.getElementById("numFieldCar").value
+            });
+            var xmlHttpRequest = new XMLHttpRequest();
+            xmlHttpRequest.open('POST', 'http://localhost:8080/bt/edit/cars/' + idField.value, true);
+            xmlHttpRequest.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            xmlHttpRequest.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+            xmlHttpRequest.send(json)
+            var k = 0;
+            xmlHttpRequest.addEventListener("readystatechange", () => {
+                if (xmlHttpRequest.readyState === 4 && (xmlHttpRequest.status === 200)) {
+                    alert("Editing car was successful")
+                } else if (xmlHttpRequest.status !== 200 && k < 1) {
+                    k++
+                    alert("Editing car was not successful")
+                } else if (xmlHttpRequest.status === 400 && k < 1) {
+                    k++;
+                    alert("Incorrect data! Please check input")
+                }
+            });
+        }
+
+    } else if (type === "Service") {
+        var id = document.createElement('label')
+        id.textContent = "id"
+        var idField = document.createElement('input')
+        idField.placeholder = "Enter service id"
+        idField.id = "idFieldService";
+
+        var cost_foreign = document.createElement('label')
+        cost_foreign.textContent = "cost foreign ";
+
+        var cost_foreignField = document.createElement('input');
+        cost_foreignField.id = "cost_foreignFieldService";
+        cost_foreignField.placeholder = "Enter cost for foreign cars";
+
+        var cost_our = document.createElement('label')
+        cost_our.textContent = "our cost";
+
+        var cost_ourField = document.createElement('input');
+        cost_ourField.id = "cost_ourFieldService";
+        cost_ourField.placeholder = "Enter cost for our cars";
+
+        var name = document.createElement('label')
+        name.textContent = "service name";
+
+        var nameField = document.createElement('input');
+        nameField.id = "nameFieldService";
+        nameField.placeholder = "Enter service name";
+
+        var button = document.createElement('button');
+        button.id = "addService";
+        button.type = "button";
+        button.textContent = "add Service"
+
+        elem.appendChild(id);
+        elem.appendChild(idField);
+        elem.appendChild(cost_foreign);
+        elem.appendChild(cost_foreignField);
+        elem.appendChild(cost_our);
+        elem.appendChild(cost_ourField);
+        elem.appendChild(name);
+        elem.appendChild(nameField);
+        elem.appendChild(button);
+
+        document.getElementById("addService").onclick = function () {
+            let json = JSON.stringify({
+                "cost_foreign": document.getElementById("cost_foreignFieldService").value,
+                "cost_our": document.getElementById("cost_ourFieldService").value,
+                "name": document.getElementById("nameFieldService").value
+            });
+            var xmlHttpRequest = new XMLHttpRequest();
+            xmlHttpRequest.open('POST', 'http://localhost:8080/bt/edit/services/' + idField.value, true);
+            xmlHttpRequest.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            xmlHttpRequest.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+            xmlHttpRequest.send(json)
+            var k = 0;
+            xmlHttpRequest.addEventListener("readystatechange", () => {
+                if (xmlHttpRequest.readyState === 4 && (xmlHttpRequest.status === 200)) {
+                    alert("Editing service was successful")
+                } else if (xmlHttpRequest.status !== 400 && xmlHttpRequest.status !== 200 && k < 1) {
+                    k++
+                    alert("Editing service was not successful")
+                } else if (xmlHttpRequest.status === 400 && k < 1) {
+                    k++;
+                    alert("Incorrect data! Please check input")
+                }
+            });
+        }
+    } else if (type === "Work") {
+        var id = document.createElement('label')
+        id.textContent = "id"
+        var idField = document.createElement('input')
+        idField.placeholder = "Enter work id"
+        idField.id = "idFieldWork";
+
+        var date =  document.createElement('label');
+        date.textContent = "Date";
+
+        var dateField = document.createElement('input');
+        dateField.id = "dateFieldWork";
+        dateField.type = "date"
+
+        var car =  document.createElement('label');
+        car.textContent = "Car id";
+
+        var carField = document.createElement('input');
+        carField.id = "carFieldWork";
+        carField.placeholder = "Enter car id";
+
+        var master = document.createElement('label')
+        master.textContent = "Master id";
+
+        var masterField = document.createElement('input');
+        masterField.id = "masterFieldWork";
+        masterField.placeholder = "Enter master id";
+
+        var service = document.createElement('label')
+        service.textContent = "Service id";
+
+        var serviceField = document.createElement('input');
+        serviceField.id = "serviceFieldWork";
+        serviceField.placeholder = "Enter service id";
+
+        var button = document.createElement('button');
+        button.id = "editWork";
+        button.type = "button";
+        button.textContent = "edit Work"
+
+        elem.appendChild(id);
+        elem.appendChild(idField);
+        elem.appendChild(date);
+        elem.appendChild(dateField);
+        elem.appendChild(car);
+        elem.appendChild(carField);
+        elem.appendChild(master);
+        elem.appendChild(masterField);
+        elem.appendChild(service);
+        elem.appendChild(serviceField);
+        elem.appendChild(button);
+
+        document.getElementById("editWork").onclick = function () {
+            var date = dateField.value;
+            let json = JSON.stringify({
+                "dateWork": date,
+                "carId": carField.value,
+                "serviceId" : serviceField.value,
+                "masterId": masterField.value
+            });
+            var xmlHttpRequest = new XMLHttpRequest();
+            xmlHttpRequest.open('POST', 'http://localhost:8080/bt/edit/works/' + idField.value, true);
+            xmlHttpRequest.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            xmlHttpRequest.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+            xmlHttpRequest.send(json)
+            var k = 0;
+            xmlHttpRequest.addEventListener("readystatechange", () => {
+                if (xmlHttpRequest.readyState === 4 && (xmlHttpRequest.status === 200)) {
+                    alert("Editing work was successful")
+                } else if (xmlHttpRequest.status !== 400 && xmlHttpRequest.status !== 200 && k < 1) {
+                    k++
+                    alert("Editing work was not successful")
+                } else if (xmlHttpRequest.status === 400 && k < 1) {
+                    k++;
+                    alert("Incorrect data! Please check input")
+                }
+            });
         }
     }
 }

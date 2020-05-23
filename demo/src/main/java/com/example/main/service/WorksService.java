@@ -12,4 +12,5 @@ public interface WorksService {
     Work findWork(long id);
     Work addWork(WorkDto dto) throws ServiceNotFoundException, NotFoundException;
     void deleteWork(long id);
+    Work editWork(long id, WorkDto dto) throws ServiceNotFoundException, NotFoundException;
 }

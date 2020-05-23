@@ -43,7 +43,6 @@ public class CarsServiceImpl implements CarsService{
 
     @Override
     public void deleteCar(long id) {
-
         List<Work> works = (List<Work>) worksRepository.findAll();
         for (int i = 0; i < works.size(); i++){
             Work work = works.get(i);
@@ -52,5 +51,21 @@ public class CarsServiceImpl implements CarsService{
             }
         }
         carsRepository.deleteById(id);
+    }
+
+    @Override
+    public Car editCar(long id, String mark, String num, Boolean is_foreign, String color) {
+        Optional<Car> optionalCars = carsRepository.findById(id);
+        if (optionalCars.isPresent()) {
+            Car car = optionalCars.get();
+            car.setColor(color);
+            car.setIs_foreign(is_foreign);
+            car.setMark(mark);
+            car.setNum(num);
+            carsRepository.save(car);
+            return optionalCars.get();
+        } else {
+            throw new WorksNotFoundException("This car not found");
+        }
     }
 }

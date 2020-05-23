@@ -9,4 +9,5 @@ public interface MastersService {
     Master findMaster(long id);
     Master addMaster(Master master);
     void deleteMaster(long id);
+    Master editMaster(long id, String name);
 }

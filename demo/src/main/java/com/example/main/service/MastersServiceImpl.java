@@ -53,4 +53,17 @@ public class MastersServiceImpl implements MastersService{
         }
         mastersRepository.deleteById(id);
     }
+
+    @Override
+    public Master editMaster(long id, String name) {
+        Optional<Master> optionalMasters = mastersRepository.findById(id);
+        if (optionalMasters.isPresent()) {
+            Master master = optionalMasters.get();
+            master.setName(name);
+            mastersRepository.save(master);
+            return optionalMasters.get();
+        } else {
+            throw new WorksNotFoundException("This master not found");
+        }
+    }
 }

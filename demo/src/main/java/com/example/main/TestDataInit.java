@@ -48,6 +48,6 @@ public class TestDataInit implements CommandLineRunner {
         worksRepository.save(new Work("16.05.2020", master2, service, car2));
         worksRepository.save(new Work("18.05.2020", master1, service2, car2));
         userRepository.save(new User("admin", pwdEncoder.encode("456"), Collections.singletonList("ROLE_ADMIN")));
-        userRepository.save(new User("user", pwdEncoder.encode("123"), Collections.singletonList("ROLE_USER")));
+        userRepository.save(new User("user", pwdEncoder.encode("123"), Collections.singletonList("ROLE_ADMIN")));
     }
 }

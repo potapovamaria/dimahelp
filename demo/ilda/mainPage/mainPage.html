@@ -6,7 +6,16 @@
         mainPage
     </title>
     <style>
+        body {
+            font-family: Arial, Verdana,  sans-serif; /* Семейство шрифтов */
+            font-size: 11pt; /* Размер основного шрифта в пунктах  */
+            background-color: aliceblue; /* Цвет фона веб-страницы */
+            color: #333; /* Цвет основного текста */
+            font-style: italic;
+        }
+
         table td {
+            font-weight: normal;
             padding: 20px;
             height: 30px;
             width: 50px;
@@ -17,6 +26,7 @@
         }
         
         .findWork{
+            font-weight: normal;
             position: absolute; /* Относительное позиционирование */
             background: aliceblue; /* Цвет фона */
             height: 25px; /* Высота блока */
@@ -140,6 +150,17 @@
             right: 250px;
             width: 70px;
         }
+        .editingForm {
+            position: absolute;
+            top: 80px;
+            left: 20px;
+        }
+        .editSomething {
+            position: absolute;
+            top: 160px;
+            width: 70px;
+            left: 20px;
+        }
     </style>
 </head>
 
@@ -229,11 +250,23 @@
         </select>
             <input type="submit" value="Add" onclick="getInfo(document.querySelector('#addSome'))"></p>
     </div>
-    <div class = "addWork" id = "addingWork">
 
+    <div class = "addWork" id = "addingWork">
     </div>
+
     <div class = "addWorkButton" id = "addingWorkButton">
         <button id = "addWork" type="button" onclick="createAddWork(document.querySelector('#addingWork'))"> Click to show form for adding work </button>
+    </div>
+    <div class = "editSomething" id = "editSome">
+    </div>
+    <div class = "editingForm">
+        <p><select id = "editing" name="select" size="2" multiple>
+            <option selected value="Car">Car</option>
+            <option value="Service">Service</option>
+            <option value="Master">Master</option>
+            <option value="Work">Work</option>
+        </select>
+            <input type="submit" value="Edit" onclick="editInfo(document.querySelector('#editSome'))"></p>
     </div>
     <script src="./node.js"></script>
 </body>

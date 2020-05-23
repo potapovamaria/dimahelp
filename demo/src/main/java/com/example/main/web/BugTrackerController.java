@@ -168,6 +168,26 @@ public class BugTrackerController {
         }
     }
 
+    @PostMapping(value = "edit/works/{id}", consumes = "application/json", produces = "application/json")
+    public Work changeWork(@PathVariable("id") long id, @RequestBody WorkDto dto) throws NotFoundException, ServiceNotFoundException {
+        return worksService.editWork(id, dto);
+    }
+
+    @PostMapping(value = "edit/cars/{id}", consumes = "application/json", produces = "application/json")
+    public Car changeCar(@PathVariable("id") long id, @RequestBody Car car) throws ServiceNotFoundException, NotFoundException {
+        return carsService.editCar(id, car.getMark(), car.getNum(), car.isIs_foreign(), car.getColor());
+    }
+
+    @PostMapping(value = "edit/services/{id}", consumes = "application/json", produces = "application/json")
+    public Services changeService(@PathVariable("id") long id, @RequestBody Services service) throws ServiceNotFoundException, NotFoundException {
+        return servicesService.editService(id, service.getName(), service.getCost_our(), service.getCost_foreign());
+    }
+
+    @PostMapping(value = "edit/masters/{id}", consumes = "application/json", produces = "application/json")
+    public Master changeMaster(@PathVariable("id") long id, @RequestBody Master master){
+        return mastersService.editMaster(id, master.getName());
+    }
+
     @Autowired
     public void setWorksService(WorksService worksService) {
         this.worksService = worksService;

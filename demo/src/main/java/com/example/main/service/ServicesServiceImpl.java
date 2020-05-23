@@ -51,4 +51,20 @@ public class ServicesServiceImpl implements ServicesService{
         }
         servicesRepository.deleteById(id);
     }
+
+    @Override
+    public Services editService(long id, String name, Integer cost_our, Integer cost_foreign) {
+        Optional<Services> optionalServices = servicesRepository.findById(id);
+        if (optionalServices.isPresent()) {
+            Services services = optionalServices.get();
+
+            services.setCost_foreign(cost_foreign);
+            services.setName(name);
+            services.setCost_our(cost_our);
+            servicesRepository.save(services);
+            return optionalServices.get();
+        } else {
+            throw new WorksNotFoundException("This service not found");
+        }
+    }
 }

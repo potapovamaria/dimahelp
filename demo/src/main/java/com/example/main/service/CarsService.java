@@ -9,4 +9,5 @@ public interface CarsService {
     Car findCar(long id);
     Car addCar(Car cars);
     void deleteCar(long id);
+    Car editCar(long id, String mark, String num, Boolean is_foreign, String color);
 }

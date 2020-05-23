@@ -11,4 +11,5 @@ public interface ServicesService {
     Services findService(long id) throws ServiceNotFoundException, NotFoundException;
     Services addService(Services services);
     void deleteService(long id);
+    Services editService(long id, String name, Integer cost_our, Integer cost_foreign);
 }

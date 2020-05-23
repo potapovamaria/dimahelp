@@ -1,7 +1,6 @@
 package com.example.main.security.jwt;
 
 import com.example.main.exception.InvalidJwtAuthenticationException;
-import com.example.main.service.CustomUserDetailsService;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
