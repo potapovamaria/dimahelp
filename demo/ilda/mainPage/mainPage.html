@@ -21,7 +21,7 @@
             width: 50px;
             border: 1px solid black;
         }
-        table{
+        table {
             border: 1px solid black;
         }
         
@@ -174,75 +174,79 @@
     <div class = "addSomething" id = "addSome">
     </div>
 
-    <div class="findMaster" >
+    <div class="findMaster" id = "classFindMaster" hidden>
     <label for="findMaster">
         <b>find Master</b></label>
     <input id="findMaster" type="text"  placeholder="Enter Master id" username="Master id" required="" />
     <button id="btnFM" type="button" onclick="getMasterById(document.querySelector('#elem'))" >find</button>
 
     </div>
-    <div class="findCar" >
+    <div class="findCar" id = "classFindCar" hidden>
         <label for="findCar">
             <b>find Car</b></label>
         <input id="findCar" type="text"  placeholder="Enter Car id" username="Car id" required="" />
         <button id="btnFC" type="button" onclick="getCarById(document.querySelector('#elem'))">find</button>
     </div>
-    <div class="findService" >
+    <div class="findService" id = "classFindService" hidden >
         <label for="findService">
             <b>find Service</b></label>
         <input id="findService" type="text"  placeholder="Enter Service id" username="Service id" required="" />
         <button id="btnFS" type="button" onclick="getServiceById(document.querySelector('#elem'))">find</button>
     </div>
 
-    <div class="findWork" >
+    <div class="findWork" id = "classFindWork" hidden>
         <label for="findWork">
             <b>find Work</b></label>
         <input id="findWork" type="text"  placeholder="Enter Work id" username="Work id" required="" />
         <button id="btnFW" type="button" onclick="getWorkById(document.querySelector('#elem'))">find</button>
     </div>
 
-    <div class="showMasters" >
+    <div class = "Check rules">
+        <button id = "checkRules" type = "button" onclick="checkRules()"> Show forms </button>
+    </div>
+
+    <div class="showMasters" id = "classShowMasters" hidden >
         <button id="btnSM" type="button" onclick="createTableShowMasters(document.querySelector('#elem'))">Show All Masters</button>
     </div>
-    <div class="showCars" >
+    <div class="showCars" id = "classShowCars" hidden>
         <button id="btnSC" type="button" onclick="createTableShowCars(document.querySelector('#elem'))">Show All Cars</button>
     </div>
-    <div class="showServices" >
+    <div class="showServices" id = "classShowServices" hidden >
         <button id="btnSS" type="button" onclick="createTableShowServices(document.querySelector('#elem'))">Show All Service</button>
     </div>
 
-    <div class="showWorks" >
+    <div class="showWorks" id = "classShowWorks" hidden>
         <button id="btnSW" type="button" onclick="createTableShowWorks(document.querySelector('#elem'))"> Show All Works
         </button>
     </div>
 
-    <div class="deleteMaster" >
+    <div class="deleteMaster" hidden id = "classDeleteMaster">
         <label for="deleteMaster">
             <b>delete Master</b></label>
         <input id="deleteMaster" type="text"  placeholder="Enter Master id" username="Master id" required="" />
         <button id="btnDM" type="button" onclick="deleteMasterById(document.querySelector('#elem'))" >delete</button>
-
     </div>
-    <div class="deleteCar" >
+
+    <div class="deleteCar" hidden id = "classDeleteCar">
         <label for="deleteCar">
             <b>delete Car</b></label>
         <input id="deleteCar" type="text"  placeholder="Enter Car id" username="Car id" required="" />
         <button id="btnDC" type="button" onclick="deleteCarById(document.querySelector('#elem'))">delete</button>
     </div>
-    <div class="deleteService" >
+    <div class="deleteService" hidden id = "classDeleteService">
         <label for="deleteService">
             <b>delete Service</b></label>
         <input id="deleteService" type="text"  placeholder="Enter Service id" username="Service id" required="" />
         <button id="btnDS" type="button" onclick="deleteServiceById(document.querySelector('#elem'))">delete</button>
     </div>
 
-    <div class="deleteWork" >
+    <div class="deleteWork" hidden id = "classDeleteWork">
         <label for="deleteWork">
             <b>delete Work</b></label>
         <input id="deleteWork" type="text"  placeholder="Enter Work id" username="Work id" required="" />
         <button id="btnDW" type="button" onclick="deleteWorkById(document.querySelector('#elem'))">delete</button>
     </div>
-    <div class = "addingForm">
+    <div class = "addingForm" hidden id = "classAddForm">
         <p><select id = "adding" name="select" size="2" multiple>
             <option selected value="Car">Car</option>
             <option value="Service">Service</option>
@@ -251,16 +255,18 @@
             <input type="submit" value="Add" onclick="getInfo(document.querySelector('#addSome'))"></p>
     </div>
 
-    <div class = "addWork" id = "addingWork">
+    <div class = "addWork" id = "addingWork"n>
     </div>
 
-    <div class = "addWorkButton" id = "addingWorkButton">
+    <div class = "addWorkButton" id = "addingWorkButton" hidden >
         <button id = "addWork" type="button" onclick="createAddWork(document.querySelector('#addingWork'))"> Click to show form for adding work </button>
     </div>
+
     <div class = "editSomething" id = "editSome">
     </div>
-    <div class = "editingForm">
-        <p><select id = "editing" name="select" size="2" multiple>
+
+    <div class = "editingForm" hidden id = "classEditing">
+        <p><select id = "editing" name="select" size="2" multiple >
             <option selected value="Car">Car</option>
             <option value="Service">Service</option>
             <option value="Master">Master</option>
@@ -268,6 +274,8 @@
         </select>
             <input type="submit" value="Edit" onclick="editInfo(document.querySelector('#editSome'))"></p>
     </div>
+
+
     <script src="./node.js"></script>
 </body>
 </html>

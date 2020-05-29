@@ -14,6 +14,7 @@ window.onload = function() {
             if (xhr.readyState === 4 && (xhr.status === 200)) {
                 var data = JSON.parse(xhr.responseText)
                 localStorage.setItem('token', data.token)
+                localStorage.setItem('role', data.role)
                 getXMLHttpRequest()
             } else if (xhr.status === 500 && (k < 1) ) {
                 alert("Incorrect password or username")

@@ -5,6 +5,7 @@ import com.example.main.entity.Work;
 import com.example.main.exception.WorksNotFoundException;
 import com.example.main.repository.MastersRepository;
 import com.example.main.repository.WorksRepository;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,13 +27,13 @@ public class MastersServiceImpl implements MastersService{
     }
 
     @Override
-    public Master findMaster(long id) {
+    public Master findMaster(long id) throws NotFoundException {
         Optional<Master> optionalMasters = mastersRepository.findById(id);
         if (optionalMasters.isPresent())
         {
             return optionalMasters.get();
         } else {
-            throw new WorksNotFoundException("This master not found");
+            throw new NotFoundException("This master not found");
         }
     }
 

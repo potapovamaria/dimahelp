@@ -1,3 +1,24 @@
+function checkRules() {
+    var role = localStorage.getItem('role')
+
+    if (role === "ROLE_ADMIN") {
+        document.getElementById('classDeleteCar').hidden = false;
+        document.getElementById('classDeleteMaster').hidden = false;
+        document.getElementById('classDeleteService').hidden = false;
+        document.getElementById('classDeleteWork').hidden = false;
+        document.getElementById('classAddForm').hidden = false;
+        document.getElementById('addingWorkButton').hidden = false;
+        document.getElementById('classEditing').hidden = false;
+    }
+    document.getElementById('classShowCars').hidden = false;
+    document.getElementById('classShowMasters').hidden = false;
+    document.getElementById('classShowWorks').hidden = false;
+    document.getElementById('classShowServices').hidden = false;
+    document.getElementById('classFindCar').hidden = false;
+    document.getElementById('classFindMaster').hidden = false;
+    document.getElementById('classFindService').hidden = false;
+    document.getElementById('classFindWork').hidden = false;
+}
 function createTableWork(tab, table) {
     var nameRow = document.createElement('tr');
 
@@ -968,28 +989,27 @@ function createAddWork(elem) {
             alert("Enter date!")
         } else {
             var date = dateField.value;
+            let json = JSON.stringify({
+                "dateWork": date,
+                "carId": localStorage.getItem('carInfo'),
+                "serviceId" : localStorage.getItem('serviceInfo'),
+                "masterId": localStorage.getItem('masterInfo')
+            })
 
-        let json = JSON.stringify({
-            "date_work": date,
-            "carId": localStorage.getItem('carInfo'),
-            "serviceId" : localStorage.getItem('serviceInfo'),
-            "masterId": localStorage.getItem('masterInfo')
-        })
-
-        var xmlHttpRequest = new XMLHttpRequest();
-        xmlHttpRequest.open('POST', 'http://localhost:8080/bt/addWork', true);
-        xmlHttpRequest.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-        xmlHttpRequest.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
-        xmlHttpRequest.send(json)
-        var k = 0;
-        xmlHttpRequest.addEventListener("readystatechange", () => {
-            if (xmlHttpRequest.readyState === 4 && (xmlHttpRequest.status === 200)) {
-                alert("Adding work was successful")
-            } else if (xmlHttpRequest.status!== 400 && xmlHttpRequest.status !== 200 && k < 1) {
-                k++
-                alert("Adding work was not successful")
-            }
-        });
+            var xmlHttpRequest = new XMLHttpRequest();
+            xmlHttpRequest.open('POST', 'http://localhost:8080/bt/addWork', true);
+            xmlHttpRequest.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            xmlHttpRequest.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+            xmlHttpRequest.send(json)
+            var k = 0;
+            xmlHttpRequest.addEventListener("readystatechange", () => {
+                if (xmlHttpRequest.readyState === 4 && (xmlHttpRequest.status === 200)) {
+                    alert("Adding work was successful")
+                } else if (xmlHttpRequest.status!== 400 && xmlHttpRequest.status !== 200 && k < 1) {
+                    k++
+                    alert("Adding work was not successful")
+                }
+            });
         }
     }
 }
@@ -1148,9 +1168,9 @@ function editInfo(elem) {
         nameField.placeholder = "Enter service name";
 
         var button = document.createElement('button');
-        button.id = "addService";
+        button.id = "editService";
         button.type = "button";
-        button.textContent = "add Service"
+        button.textContent = "edit Service"
 
         elem.appendChild(id);
         elem.appendChild(idField);
@@ -1162,7 +1182,7 @@ function editInfo(elem) {
         elem.appendChild(nameField);
         elem.appendChild(button);
 
-        document.getElementById("addService").onclick = function () {
+        document.getElementById("editService").onclick = function () {
             let json = JSON.stringify({
                 "cost_foreign": document.getElementById("cost_foreignFieldService").value,
                 "cost_our": document.getElementById("cost_ourFieldService").value,

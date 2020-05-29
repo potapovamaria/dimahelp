@@ -69,7 +69,7 @@ public class WorksServiceImpl implements WorksService{
         }
     }
 
-    private Work fromDto(final WorkDto dto) throws ServiceNotFoundException, NotFoundException {
+    private Work fromDto(final WorkDto dto) throws NotFoundException {
         final Master master = mastersService.findMaster(dto.getMasterId());
         final Car car = carsService.findCar(dto.getCarId());
         final Services service = servicesService.findService(dto.getServiceId());

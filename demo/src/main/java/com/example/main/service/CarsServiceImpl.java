@@ -5,6 +5,7 @@ import com.example.main.entity.Work;
 import com.example.main.exception.WorksNotFoundException;
 import com.example.main.repository.CarsRepository;
 import com.example.main.repository.WorksRepository;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,13 +27,13 @@ public class CarsServiceImpl implements CarsService{
     }
 
     @Override
-    public Car findCar(long id) {
+    public Car findCar(long id) throws NotFoundException {
         Optional<Car> optionalCars = carsRepository.findById(id);
         if (optionalCars.isPresent())
         {
             return optionalCars.get();
         } else {
-            throw new WorksNotFoundException("This car not found");
+            throw new NotFoundException("This car not found");
         }
     }
 

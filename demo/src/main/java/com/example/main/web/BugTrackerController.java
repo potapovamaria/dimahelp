@@ -104,7 +104,7 @@ public class BugTrackerController {
     public ResponseEntity<Car> getCar(@PathVariable("id") long id) {
         try {
             return new ResponseEntity<>(carsService.findCar(id), HttpStatus.OK);
-        }catch (WorksNotFoundException ex) {
+        }catch (WorksNotFoundException | NotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This car not found");
         }
     }
@@ -113,7 +113,7 @@ public class BugTrackerController {
     public ResponseEntity<Master> getMaster(@PathVariable("id") long id) {
         try {
             return new ResponseEntity<>(mastersService.findMaster(id), HttpStatus.OK);
-        }catch (WorksNotFoundException ex) {
+        }catch (WorksNotFoundException | NotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This master not found");
         }
     }
@@ -122,7 +122,7 @@ public class BugTrackerController {
     public ResponseEntity<Services> getService(@PathVariable("id") long id) {
         try {
             return new ResponseEntity<>(servicesService.findService(id), HttpStatus.OK);
-        }catch (WorksNotFoundException | ServiceNotFoundException | NotFoundException ex) {
+        }catch (WorksNotFoundException | NotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This service not found");
         }
     }
